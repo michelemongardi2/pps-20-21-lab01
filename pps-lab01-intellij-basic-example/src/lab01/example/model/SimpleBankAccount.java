@@ -11,4 +11,8 @@ public class SimpleBankAccount extends AbstractSimpleBankAccount {
         super(holder, balance);
     }
 
+    @Override
+    boolean isWithdrawAllowed(double amount) {
+        return this.balance >= amount;
+    }
 }

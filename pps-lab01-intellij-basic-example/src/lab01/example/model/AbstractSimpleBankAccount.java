@@ -1,6 +1,6 @@
 package lab01.example.model;
 
-public class AbstractSimpleBankAccount implements BankAccount {
+public abstract class AbstractSimpleBankAccount implements BankAccount {
     protected final AccountHolder holder;
     protected double balance;
 
@@ -33,9 +33,7 @@ public class AbstractSimpleBankAccount implements BankAccount {
         }
     }
 
-    protected boolean isWithdrawAllowed(final double amount) {
-        return this.balance >= amount;
-    }
+    abstract boolean isWithdrawAllowed(final double amount);
 
     protected boolean checkUser(final int id) {
         return this.holder.getId() == id;
