@@ -4,7 +4,7 @@ public class AbstractSimpleBankAccount implements BankAccount {
     protected final AccountHolder holder;
     protected double balance;
 
-    public AbstractSimpleBankAccount(final double balance, final AccountHolder holder) {
+    public AbstractSimpleBankAccount(final AccountHolder holder, final double balance) {
         this.balance = balance;
         this.holder = holder;
     }
@@ -33,11 +33,11 @@ public class AbstractSimpleBankAccount implements BankAccount {
         }
     }
 
-    private boolean isWithdrawAllowed(final double amount) {
+    protected boolean isWithdrawAllowed(final double amount) {
         return this.balance >= amount;
     }
 
-    private boolean checkUser(final int id) {
+    protected boolean checkUser(final int id) {
         return this.holder.getId() == id;
     }
 }

@@ -5,11 +5,13 @@ import lab01.example.model.SimpleBankAccount;
 /**
  * The test suite for testing the SimpleBankAccount implementation
  */
-class SimpleBankAccountTest extends AbstractSimpleBankAccountTest {
+class SimpleBankAccountTest extends AbstractSimpleBankAccountTest <SimpleBankAccount> {
 
     @Override
-    protected BankAccount getBankAccount(AccountHolder accountHolder, double balance) {
+    protected SimpleBankAccount getBankAccount(AccountHolder accountHolder, double balance) {
         return new SimpleBankAccount(accountHolder, balance);
     }
+
+
 
 }

@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class AbstractSimpleBankAccountTest {
+public abstract class AbstractSimpleBankAccountTest <B extends BankAccount> {
     protected AccountHolder accountHolder;
-    protected BankAccount bankAccount;
+    protected B bankAccount;
 
     @BeforeEach
     void beforeEach(){
@@ -16,7 +16,7 @@ public abstract class AbstractSimpleBankAccountTest {
         bankAccount = getBankAccount(accountHolder, 0);
     }
 
-    protected abstract BankAccount getBankAccount(AccountHolder accountHolder, double balance);
+    protected abstract B getBankAccount(AccountHolder accountHolder, double balance);
 
     @Test
     void testInitialBalance() {
