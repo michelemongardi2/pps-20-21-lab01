@@ -10,7 +10,6 @@ public class SimpleBankAccountWithAtmTest {
     private AccountHolder accountHolder;
     private BankAccount bankAccount;
 
-
     @BeforeEach
     void beforeEach() {
         accountHolder = new AccountHolder("Mario", "Rossi", 1);
@@ -21,5 +20,7 @@ public class SimpleBankAccountWithAtmTest {
     void testInitialBalance(){
         assertEquals(0, bankAccount.getBalance());
     }
+
+
 
 }
