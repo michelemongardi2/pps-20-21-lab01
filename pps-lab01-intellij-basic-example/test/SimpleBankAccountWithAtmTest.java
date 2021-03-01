@@ -2,25 +2,14 @@ import lab01.example.model.AccountHolder;
 import lab01.example.model.BankAccount;
 import lab01.example.model.SimpleBankAccountWithAtm;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SimpleBankAccountWithAtmTest {
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
+public class SimpleBankAccountWithAtmTest extends AbstractSimpleBankAccountTest{
 
-    @BeforeEach
-    void beforeEach() {
-        accountHolder = new AccountHolder("Mario", "Rossi", 1);
-        bankAccount = new SimpleBankAccountWithAtm(accountHolder, 0);
+    @Override
+    protected BankAccount getBankAccount(AccountHolder accountHolder, double balance) {
+        return new SimpleBankAccountWithAtm(accountHolder, balance);
     }
-
-    @Test
-    void testInitialBalance(){
-        assertEquals(0, bankAccount.getBalance());
-    }
-
-
 
 }

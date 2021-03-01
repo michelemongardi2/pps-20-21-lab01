@@ -6,6 +6,4 @@ public class SimpleBankAccountWithAtm extends AbstractSimpleBankAccount {
         super(balance, holder);
     }
 
-
-
 }

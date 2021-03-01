@@ -34,4 +34,5 @@ public interface BankAccount {
      * @param amount the amount of the withdraw
      */
     void withdraw(int usrID, double amount);
+
 }
