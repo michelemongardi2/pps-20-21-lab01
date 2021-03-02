@@ -1,6 +1,15 @@
 package lab01.example.model;
 
+/**
+ * This class represent a particular instance of a BankAccount.
+ * In particular, a Simple Bank Account With Atm allows the deposit and the withdraw using also the ATM.
+ * Each transaction done with the ATM implies paying a fee
+ */
+
 public class SimpleBankAccountWithAtm extends AbstractSimpleBankAccount {
+
+    private static final int DEPOSIT_ATM_FEE = 1;
+    private static final int WITHDRAW_ATM_FEE = 1;
 
     public SimpleBankAccountWithAtm(AccountHolder holder, final double balance) {
         super(holder, balance);
@@ -8,18 +17,18 @@ public class SimpleBankAccountWithAtm extends AbstractSimpleBankAccount {
 
     public void depositeWithAtm(final int usrID, final double amount) {
         if (checkUser(usrID)) {
-            this.balance += amount-1;
+            this.setBalance(this.getBalance() + amount - DEPOSIT_ATM_FEE);
         }
     }
 
     public void withdrawWithAtm(final int usrID, final double amount) {
         if (checkUser(usrID) && isWithdrawAllowed(amount)) {
-            this.balance -= amount+1;
+            this.setBalance(this.getBalance() - (amount + WITHDRAW_ATM_FEE));
         }
     }
 
     @Override
     boolean isWithdrawAllowed(double amount) {
-        return this.balance >= amount+1;
+        return this.getBalance() >= amount + WITHDRAW_ATM_FEE;
     }
 }

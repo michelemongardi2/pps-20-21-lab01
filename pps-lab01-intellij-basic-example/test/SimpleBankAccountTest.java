@@ -8,10 +8,7 @@ import lab01.example.model.SimpleBankAccount;
 class SimpleBankAccountTest extends AbstractSimpleBankAccountTest <SimpleBankAccount> {
 
     @Override
-    protected SimpleBankAccount getBankAccount(AccountHolder accountHolder, double balance) {
-        return new SimpleBankAccount(accountHolder, balance);
+    protected SimpleBankAccount setTestedTypeBankAccount(AccountHolder accountHolder, double initialBalance) {
+        return new SimpleBankAccount(accountHolder, initialBalance);
     }
-
-
-
 }
