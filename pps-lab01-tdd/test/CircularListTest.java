@@ -2,9 +2,6 @@ import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -12,17 +9,20 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
 
-    protected CircularList circularList;
+    private CircularList circularList;
+    private static final int NUMBER_OF_ELEMENTS_TO_ADD = 3;
+    private int[] localElementsAdded;
 
     @BeforeEach
     void beforeEach(){
         circularList = new CircularListImpl();
+        localElementsAdded = new int[NUMBER_OF_ELEMENTS_TO_ADD];
     }
 
-
     private void addElemetsToTheList() {
-        for(int i = 0; i < 10; i++){
-            circularList.add((int) Math.random());
+        for(int i = 0; i < NUMBER_OF_ELEMENTS_TO_ADD; i++){
+            localElementsAdded[i] = (int) Math.random();
+            circularList.add(localElementsAdded[i]);
         }
     }
 
@@ -37,7 +37,7 @@ public class CircularListTest {
     void testSizeOfTheList(){
         assertTrue(circularList.isEmpty());
         addElemetsToTheList();
-        assertEquals(10, circularList.size());
+        assertEquals(NUMBER_OF_ELEMENTS_TO_ADD, circularList.size());
     }
 
 
@@ -50,55 +50,48 @@ public class CircularListTest {
 
     @Test
     void testNextElementOfTheList(){
-        circularList.add(1);
-        circularList.add(2);
-        circularList.add(3);
-        assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(2), circularList.next());
-        assertEquals(Optional.of(3), circularList.next());
-        assertEquals(Optional.of(1), circularList.next());
+        addElemetsToTheList();
+        assertEquals(localElementsAdded[0], circularList.next().get());
+        assertEquals(localElementsAdded[1], circularList.next().get());
+        assertEquals(localElementsAdded[2], circularList.next().get());
+        assertEquals(localElementsAdded[0], circularList.next().get());
     }
+
 
     @Test
     void testPreviousElementOfTheList(){
-        circularList.add(1);
-        circularList.add(2);
-        circularList.add(3);
-        assertEquals(Optional.of(3), circularList.previous());
-        assertEquals(Optional.of(2), circularList.previous());
-        assertEquals(Optional.of(1), circularList.previous());
-        assertEquals(Optional.of(3), circularList.previous());
+        addElemetsToTheList();
+        assertEquals(localElementsAdded[2], circularList.previous().get());
+        assertEquals(localElementsAdded[1], circularList.previous().get());
+        assertEquals(localElementsAdded[0], circularList.previous().get());
+        assertEquals(localElementsAdded[2], circularList.previous().get());
     }
 
     @Test
-    void testMixed(){
-        circularList.add(1);
-        circularList.add(2);
-        circularList.add(3);
-        assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(3), circularList.previous());
-        assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(3), circularList.previous());
-        assertEquals(Optional.of(2), circularList.previous());
-        assertEquals(Optional.of(3), circularList.next());
-        assertEquals(Optional.of(2), circularList.previous());
-        assertEquals(Optional.of(3), circularList.next());
-        assertEquals(Optional.of(1), circularList.next());
+    void testNextPreviousMixed(){
+        addElemetsToTheList();
+        assertEquals(localElementsAdded[0], circularList.next().get());
+        assertEquals(localElementsAdded[2], circularList.previous().get());
+        assertEquals(localElementsAdded[0], circularList.next().get());
+        assertEquals(localElementsAdded[2], circularList.previous().get());
+        assertEquals(localElementsAdded[1], circularList.previous().get());
+        assertEquals(localElementsAdded[2], circularList.next().get());
+        assertEquals(localElementsAdded[1], circularList.previous().get());
+        assertEquals(localElementsAdded[2], circularList.next().get());
+        assertEquals(localElementsAdded[0], circularList.next().get());
     }
 
     @Test
     void testResetIndexList(){
-        circularList.add(1);
-        circularList.add(2);
-        circularList.add(3);
-        assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(3), circularList.previous());
-        assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(3), circularList.previous());
-        assertEquals(Optional.of(2), circularList.previous());
+        addElemetsToTheList();
+        assertEquals(localElementsAdded[0], circularList.next().get());
+        assertEquals(localElementsAdded[2], circularList.previous().get());
+        assertEquals(localElementsAdded[0], circularList.next().get());
+        assertEquals(localElementsAdded[2], circularList.previous().get());
+        assertEquals(localElementsAdded[1], circularList.previous().get());
         circularList.reset();
-        assertEquals(Optional.of(1), circularList.next());
+        assertEquals(localElementsAdded[0], circularList.next().get());
         circularList.reset();
-        assertEquals(Optional.of(3), circularList.previous());
+        assertEquals(localElementsAdded[2], circularList.previous().get());
     }
 }
