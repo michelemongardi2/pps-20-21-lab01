@@ -17,14 +17,22 @@ public class SimpleBankAccountWithAtm extends AbstractSimpleBankAccount {
 
     public void depositeWithAtm(final int usrID, final double amount) {
         if (checkUser(usrID)) {
-            this.setBalance(this.getBalance() + amount - DEPOSIT_ATM_FEE);
+            this.setBalance(this.getBalance() + getDepositAmountWithFee(amount));
         }
     }
 
     public void withdrawWithAtm(final int usrID, final double amount) {
         if (checkUser(usrID) && isWithdrawAllowed(amount)) {
-            this.setBalance(this.getBalance() - (amount + WITHDRAW_ATM_FEE));
+            this.setBalance(this.getBalance() - getWithdrawAmountWithFee(amount));
         }
+    }
+
+    private double getWithdrawAmountWithFee(double amount){
+        return amount + WITHDRAW_ATM_FEE;
+    }
+
+    private double getDepositAmountWithFee(double amount){
+        return amount - DEPOSIT_ATM_FEE;
     }
 
     @Override
