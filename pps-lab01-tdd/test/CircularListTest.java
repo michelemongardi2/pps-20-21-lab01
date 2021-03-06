@@ -13,6 +13,7 @@ public class CircularListTest {
     private int[] localElementsAdded;
     private SelectStrategy evenStrategy;
     private SelectStrategy multipleStrategy;
+    private SelectStrategy equalsStrategy;
 
     @BeforeEach
     void beforeEach(){
@@ -115,5 +116,16 @@ public class CircularListTest {
         assertEquals(4, circularList.next(multipleStrategy).get());
         assertEquals(6, circularList.next(multipleStrategy).get());
         assertEquals(2, circularList.next(multipleStrategy).get());
+    }
+
+    @Test
+    void testEqualsStrategy(){
+        circularList.add(2);
+        circularList.add(4);
+        circularList.add(2);
+        circularList.add(6);
+        equalsStrategy = new SelectEqualsStrategy(circularList.next().get());
+        assertEquals(2, circularList.next(equalsStrategy).get());
+        assertEquals(2, circularList.next(equalsStrategy).get());
     }
 }

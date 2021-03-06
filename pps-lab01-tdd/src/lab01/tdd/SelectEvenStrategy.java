@@ -6,6 +6,4 @@ public class SelectEvenStrategy implements SelectStrategy{
     public boolean apply(int element) {
             return element % 2 == 0;
     }
-
-
 }
