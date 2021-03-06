@@ -1,6 +1,9 @@
 import lab01.tdd.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -11,15 +14,16 @@ public class CircularListTest {
     private CircularList circularList;
     private static final int NUMBER_OF_ELEMENTS_TO_ADD = 3;
     private int[] localElementsAdded;
-    private SelectStrategy evenStrategy;
-    private SelectStrategy multipleStrategy;
-    private SelectStrategy equalsStrategy;
+    private SelectStrategyFactory selectStrategyFactory;
+    private static final String EVEN = "Even";
+    private static final String MULTIPLE_OF = "Multiple_Of";
+    private static final String EQUALS = "Equals";
 
     @BeforeEach
     void beforeEach(){
         circularList = new CircularListImpl();
         localElementsAdded = new int[NUMBER_OF_ELEMENTS_TO_ADD];
-        evenStrategy = new SelectEvenStrategy();
+        selectStrategyFactory = new SelectStrategyFactory();
     }
 
     private void addElemetsToTheList() {
@@ -103,7 +107,8 @@ public class CircularListTest {
         circularList.add(1);
         circularList.add(2);
         circularList.add(3);
-        assertEquals(2 , circularList.next(evenStrategy).get());
+        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(EVEN, Optional.empty());
+        assertEquals(2 , circularList.next(selectStrategy).get());
     }
 
     @Test
@@ -112,10 +117,10 @@ public class CircularListTest {
         circularList.add(4);
         circularList.add(5);
         circularList.add(6);
-        multipleStrategy = new SelectMultipleOfStrategy(circularList.next().get());
-        assertEquals(4, circularList.next(multipleStrategy).get());
-        assertEquals(6, circularList.next(multipleStrategy).get());
-        assertEquals(2, circularList.next(multipleStrategy).get());
+        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(MULTIPLE_OF, circularList.next());
+        assertEquals(4, circularList.next(selectStrategy).get());
+        assertEquals(6, circularList.next(selectStrategy).get());
+        assertEquals(2, circularList.next(selectStrategy).get());
     }
 
     @Test
@@ -124,8 +129,8 @@ public class CircularListTest {
         circularList.add(4);
         circularList.add(2);
         circularList.add(6);
-        equalsStrategy = new SelectEqualsStrategy(circularList.next().get());
-        assertEquals(2, circularList.next(equalsStrategy).get());
-        assertEquals(2, circularList.next(equalsStrategy).get());
+        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(EQUALS, circularList.next());
+        assertEquals(2, circularList.next(selectStrategy).get());
+        assertEquals(2, circularList.next(selectStrategy).get());
     }
 }
