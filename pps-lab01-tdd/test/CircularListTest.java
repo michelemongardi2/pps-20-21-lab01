@@ -1,7 +1,4 @@
-import lab01.tdd.CircularList;
-import lab01.tdd.CircularListImpl;
-import lab01.tdd.SelectStrategy;
-import lab01.tdd.SelectEvenStrategy;
+import lab01.tdd.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,13 +11,14 @@ public class CircularListTest {
     private CircularList circularList;
     private static final int NUMBER_OF_ELEMENTS_TO_ADD = 3;
     private int[] localElementsAdded;
-    private SelectStrategy selectedStrategy;
+    private SelectStrategy evenStrategy;
+    private SelectStrategy multipleStrategy;
 
     @BeforeEach
     void beforeEach(){
         circularList = new CircularListImpl();
         localElementsAdded = new int[NUMBER_OF_ELEMENTS_TO_ADD];
-        selectedStrategy = new SelectEvenStrategy();
+        evenStrategy = new SelectEvenStrategy();
     }
 
     private void addElemetsToTheList() {
@@ -104,6 +102,18 @@ public class CircularListTest {
         circularList.add(1);
         circularList.add(2);
         circularList.add(3);
-        assertEquals(2 , circularList.next(selectedStrategy).get());
+        assertEquals(2 , circularList.next(evenStrategy).get());
+    }
+
+    @Test
+    void testMultipleOfStrategy(){
+        circularList.add(2);
+        circularList.add(4);
+        circularList.add(5);
+        circularList.add(6);
+        multipleStrategy = new SelectMultipleOfStrategy(circularList.next().get());
+        assertEquals(4, circularList.next(multipleStrategy).get());
+        assertEquals(6, circularList.next(multipleStrategy).get());
+        assertEquals(2, circularList.next(multipleStrategy).get());
     }
 }
