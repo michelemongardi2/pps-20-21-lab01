@@ -102,35 +102,41 @@ public class CircularListTest {
         assertEquals(localElementsAdded[2], circularList.previous().get());
     }
 
+
+    private void populateSimpleList() {
+        for(int i = 1; i <= 10; i++){
+            circularList.add(i);
+        }
+    }
+
     @Test
     void testEvenStrategy(){
-        circularList.add(1);
-        circularList.add(2);
-        circularList.add(3);
+        populateSimpleList();
         SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(EVEN, Optional.empty());
         assertEquals(2 , circularList.next(selectStrategy).get());
     }
 
     @Test
     void testMultipleOfStrategy(){
-        circularList.add(2);
-        circularList.add(4);
-        circularList.add(5);
-        circularList.add(6);
-        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(MULTIPLE_OF, circularList.next());
+        populateSimpleList();
+        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(MULTIPLE_OF, Optional.of(2));
+        assertEquals(2, circularList.next(selectStrategy).get());
         assertEquals(4, circularList.next(selectStrategy).get());
         assertEquals(6, circularList.next(selectStrategy).get());
-        assertEquals(2, circularList.next(selectStrategy).get());
     }
 
     @Test
     void testEqualsStrategy(){
-        circularList.add(2);
-        circularList.add(4);
-        circularList.add(2);
-        circularList.add(6);
-        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(EQUALS, circularList.next());
-        assertEquals(2, circularList.next(selectStrategy).get());
-        assertEquals(2, circularList.next(selectStrategy).get());
+        populateSimpleList();
+        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(EQUALS, Optional.of(4));
+        assertEquals(4, circularList.next(selectStrategy).get());
+        assertEquals(4, circularList.next(selectStrategy).get());
+    }
+
+    @Test
+    void testNextWithStrategyNoMatch(){
+        populateSimpleList();
+        SelectStrategy selectStrategy = selectStrategyFactory.getSelectStrategy(EQUALS, Optional.of(20));
+        assertEquals(Optional.empty(), circularList.next(selectStrategy));
     }
 }

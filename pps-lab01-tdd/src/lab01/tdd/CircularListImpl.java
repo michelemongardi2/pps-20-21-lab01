@@ -7,11 +7,11 @@ import java.util.Optional;
 public class CircularListImpl implements CircularList {
 
     private final List<Integer> circularList;
-    private int inidexList;
+    private int indexList;
 
     public CircularListImpl(){
         this.circularList =  new ArrayList<>();
-        this.inidexList = -1;
+        this.indexList = -1;
     }
 
     @Override
@@ -31,32 +31,32 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        inidexList++;
-        if(inidexList >= circularList.size()) {
-            inidexList = 0;
+        indexList++;
+        if(indexList >= circularList.size()) {
+            indexList = 0;
         }
-        return Optional.of(circularList.get(inidexList));
+        return Optional.of(circularList.get(indexList));
     }
 
     @Override
     public Optional<Integer> previous() {
-        inidexList--;
-        if(inidexList < 0) {
-            inidexList = circularList.size() - 1;
+        indexList--;
+        if(indexList < 0) {
+            indexList = circularList.size() - 1;
         }
-        return Optional.of(circularList.get(inidexList));
+        return Optional.of(circularList.get(indexList));
     }
 
     @Override
     public void reset() {
-        inidexList = -1;
+        indexList = -1;
     }
 
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
         for(int i = 0; i < circularList.size(); i++) {
             if(strategy.apply(this.next().get()))
-                return Optional.of(circularList.get(inidexList));
+                return Optional.of(circularList.get(indexList));
             }
         return Optional.empty();
     }
